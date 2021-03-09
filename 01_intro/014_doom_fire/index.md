@@ -13,7 +13,7 @@ title: Приложение огонь!
 
 Прежде чем мы начнем писать огненный код, разберемся, как работать с графикой на Android.
 
-Как мы уже знаем, всё, что отображается на экране Android устройства -- это View. В распоряжении разработчика есть набор  View из Android SDK для отображения стандартных компонентов интефейса: текста, кнопок, картинок... Если нужно нарисовать что-то нестандартное, то нужно это делать так же при помощи View, но этот View придется написать самим. За отрисовку на экране содержимого View отвечает метод `View.onDraw(Canvas canvas)`, который надо переопределить и добавить в него код, который нарисует то, что надо. Общий алгоритм действий для рисования чего-то при помощи View, следующий:
+Как мы уже знаем, всё, что отображается на экране Android устройства -- это View. В распоряжении разработчика есть набор  View из Android SDK для отображения стандартных компонентов интерфейса: текста, кнопок, картинок... Если нужно нарисовать что-то нестандартное, то нужно это делать так же при помощи View, но этот View придется написать самим. За отрисовку на экране содержимого View отвечает метод `View.onDraw(Canvas canvas)`, который надо переопределить и добавить в него код, который нарисует то, что надо. Общий алгоритм действий для рисования чего-то при помощи View, следующий:
 
 - Создать свой класс, наследующий от View
 - Переопределить в нем метод `View.onDraw(Canvas canvas)`
@@ -26,89 +26,108 @@ title: Приложение огонь!
 
 Чтобы рисовать, нам понадобятся классы `android.graphics.Canvas` и `android.graphics.Paint`.
 
-Первый (Canvas) содержит методы вида `drawSomething` для рисования графических объектов и отвечает за отрисовку финального изображения. В метод `onDraw(Canvas canvas)` объект `Canvas` приходит в качестве аргумента -- этот объект связан с отображением `View` на экране, и все вызовы на нём будут перобразованы в низкоуровневые команды графического процессора (Open GL), которые будут выполнены при формирования кадра в графической памяти перед отрисовкой на экране. Подробно о том, как устроена графическая подсистема Android, можно прочитать в статье [Graphics architecture](https://source.android.com/devices/graphics/architecture), но пока можно считать, что, вызывая методы `Canvas.drawSomething` мы просто рисуем внутри нашего View на экране.
+Первый (Canvas) содержит методы вида `drawSomething` для рисования графических объектов и отвечает за отрисовку финального изображения. В метод `onDraw(Canvas canvas)` объект `Canvas` приходит в качестве аргумента -- этот объект связан с отображением `View` на экране, и все вызовы на нём будут преобразованы в низкоуровневые команды графического процессора (Open GL), которые будут выполнены при формировании кадра в графической памяти перед отрисовкой на экране. Подробно о том, как устроена графическая подсистема Android, можно прочитать в статье [Graphics architecture](https://source.android.com/devices/graphics/architecture), но пока можно считать, что, вызывая методы `Canvas.drawSomething` мы просто рисуем внутри нашего View на экране.
 
 Класс `Paint` отвечает за то, *как* мы рисуем -- каким цветом, стилем, какой толщины линиями и т.п. Мы сами создаем объект `Paint` в коде и используем его при необходимости.
 
 ## Примеры рисования на Canvas
 
-Для того, чтобы попрактиковаться с рисованием на Canvas, создайте новый проект Android приложения, а в нём класс `DemoDrawingView`, который наследует от `View`:
-```
-public class DemoDrawingView extends View {
+Для того чтобы попрактиковаться с рисованием на Canvas, создайте новый проект Android приложения, а в нём класс `DemoDrawingView`, который наследует от `View`:
 
-    public DemoDrawingView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-}
+```kotlin
+class DemoDrawingView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) 
 ```
 
-Конструктор с сигнатурой `<init>(Context, AttributeSet)` обязательно нужен для того, чтобы этот класс можно было использовать в верстке.
+Добавьте в проект одну основную activity, и используйте в ней следующую верстку (обратите внимание на имя пакета у DemoDrawingView):
 
-Добавьте в проект одну основную активность, и используйте в ней следующую верстку (обратите внимание на имя пакета у DemoDrawingView):
-```
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" 
-    android:layout_height="match_parent">
-    
-    <ваше-имя-Java-пакета.DemoDrawingView
+```xml
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ru.ok.technopolis.DemoDrawingView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000"/>
+        android:background="#000" />
 
 </FrameLayout>
 ```
 
-Здесь мы используем атрибут `background` для задания цвета фона нашего View. Мы хотим, чтобы он был черным (на черном как-то удобнее рисовать), поэтому его значение равно `#000` -- это сокращение от шестнадцатиричного `ff000000` (черный цвет в ARGB цветовой модели).
+Здесь мы используем атрибут `background` для задания цвета фона нашего View. Мы хотим, чтобы он был черным (на черном как-то удобнее рисовать), поэтому его значение равно `#000` -- это сокращение от шестнадцатеричного `ff000000` (черный цвет в ARGB цветовой модели).
 
 В классе `DemoDrawingView` переопределите метод `onDraw(Canvas)`:
-```
-    @Override
-    protected void onDraw(Canvas canvas) {
-        int width = getWidth();
-        int height = getHeight();
 
-        // Will draw in rect (0,0) - (width, height)
-        // Put your custom drawing code here
-    }
+```kotlin
+override fun onDraw(canvas: Canvas) {
+    val width = width
+    val height = height
+
+    // Will draw in rect (0,0) - (width, height)
+    // Put your custom drawing code here
+}
 ```
 
-Сейчас в методе `onDraw` нет никакого кода, который что-то рисует, поэтому, если запустить сейчас приложение, то мы увидим просто черный экран -- это пустой `DemoDrawingView` на черном фоне, занимающий весь экран.
+Сейчас в методе `onDraw` нет никакого кода, который что-то рисует поэтому если запустить сейчас приложение, то мы увидим просто черный экран -- это пустой `DemoDrawingView` на черном фоне, занимающий весь экран.
 
 Рисование происходит в пространстве координат View и ограничено прямоугольной областью, которую занимает View. Левый верхний угол имеет координаты `(0.0)`, а правый нижний -- `(width, height)`, где `width` и `height` это ширина и высота View, которые можно получить при помощи методов `getWidth()` и `getHeight()`.
 
 Для вызова некоторых методов отрисовки нам понадобится объект `Paint` для того, чтобы указывать цвет. Мы создадим один инстанс `Paint` и сохраним в поле класса `DemoDrawingView`, чтобы переиспользовать его в дальнейшем:
 
-```
-	private final Paint paint = new Paint();
+```kotlin
+private val paint = Paint()
 ```
 
-Ниже будут приведены примеры кода, который надо встравить в метод `onDraw()` после комментария *Put your custom drawing code here*.
+Ниже будут приведены примеры кода, который надо вставить в метод `onDraw()` после комментария *Put your custom drawing code here*.
 
 ### Заливка цветом
 
-```
-	canvas.drawColor(Color.BLUE);
+```kotlin
+canvas.drawColor(Color.BLUE)
 ```
 
 <img src="img/0801_fill_color.png"/>
 
+Что бы убрать надпись HelloWorld и сам ActionBar измените в файле `themes.xml` родительскую тему вашего приложения. Изначально тема выглядит примерно так:
+
+```xml
+<style name="Theme.HelloWorld" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+```
+
+Нужно изменить на 
+
+```xml
+<style name="Theme.HelloWorld" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+```
+
+<img src="img/0802_no_action_bar.png"/>
+
 ### Прямоугольники
 
-```
-    paint.setColor(Color.GREEN);
-    
-	final int size = 300;
-    for (int x = 0; x < width; x += size) {
-        for (int y = 0; y < height; y += size) {
-            paint.setColor(0x00ffffff & (1257823419 * x + 2118746214 * y) | 0xff000000);
-            canvas.drawRect(x, y, x + size, y + size, paint);
+```kotlin
+override fun onDraw(canvas: Canvas) {
+    paint.color = Color.GREEN
+    val size = 300
+    for (x in 0..width step size) {
+        for (y in 0..height step size) {
+            paint.color = 0x00ffffff and 1257823419 * x + 2118746214 * y or -0x1000000
+            canvas.drawRect(
+                x.toFloat(),
+                y.toFloat(),
+                (x + size).toFloat(),
+                (y + size).toFloat(),
+                paint
+            )
         }
     }
+}
 ```
 
-<img src="img/0802_rectangles.png"/>
+<img src="img/0803_rectangles.png"/>
 
 ### Круги
 
