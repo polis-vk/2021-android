@@ -12,9 +12,9 @@ highlight: true
 поле ввода, куда пользователь будет вводить своё имя и кнопку для подтверждения ввода, по нажатию на которую
 и будет выводиться текст сообщения с именем пользователя.
 
-## Добавление второй активности
+## Добавление второй activity
 
-Создайте новый класс активности в том же Java пакете и назовите его `HelloUsernameActivity`. Пусть этот класс также наследует от `android.app.Activity`. UI этой активности будет отличаться от `HelloWorldActivity`, но для начала, чтобы просто убедиться, что вторая активность работает, скопируйте файл верстки `activity_hello_world` в `activity_hello_username` и загрузите этот файл верстки в методе `onCreate` класса `HelloUsernameActivity`:
+Создайте новый класс activity в том же пакете и назовите его `HelloUsernameActivity`. Пусть этот класс также наследует от `android.app.Activity`. UI этой активности будет отличаться от `HelloWorldActivity`, но для начала, чтобы просто убедиться, что вторая activity работает, скопируйте файл верстки `activity_hello_world` в `activity_hello_username` и загрузите этот файл верстки в методе `onCreate` класса `HelloUsernameActivity`:
 
 ```
 public class HelloUsernameActivity extends Activity {

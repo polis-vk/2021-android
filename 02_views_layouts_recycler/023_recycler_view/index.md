@@ -20,7 +20,7 @@ highlight: true
 ```groovy
 dependencies {
 ...
-    compile 'com.android.support:recyclerview-v7:28.0.0'
+    compile 'androidx.constraintlayout:constraintlayout:2.0.4'
 ...
 }
 ```
@@ -29,37 +29,32 @@ dependencies {
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_main__rv_movies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
 Запустив проект с такой версткой мы увидим пустой белый экран.
 Попробуем отобразить какие-то данные в нашем списке. 
 
-Предположим, что мы хотим сделаем приложение-список фильмов. Для начала создадим класс `Movie`, который будет содержать краткую информацию о конкретном фильме.
+Предположим, что мы хотим сделать приложение-список фильмов. Для начала создадим класс `Movie`, который будет содержать краткую информацию о конкретном фильме.
 
-```java
-public class Movie {
-
-    public final String name;
-    public final String description;
-    public final int poster;
-
-    public Movie(String name, String description, int poster) {
-        this.name = name;
-        this.description = description;
-        this.poster = poster;
-    }
-
-}
+```kotlin
+data class Movie(val name: String, val description: String, val poster: Int)
 ```
 
 Сущность фильма имеет: имя, описание, изображение. Поле `poster` имеет тип `int` потому что картинка будет взята из ресурсов приложения.
@@ -67,14 +62,14 @@ public class Movie {
 Как будет выглядеть ячейка с нашим фильмом? Давайте сверстаем новый макет: нам необходимо расположить два `TextView` и один `ImageView`.
 
 ```xml
-<<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/movie_item__iv_poster"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -83,9 +78,9 @@ public class Movie {
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/cat" />
+        tools:src="@drawable/movie_1" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/movie_item__tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -104,7 +99,7 @@ public class Movie {
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Movie name" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/movie_item__tv_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -114,14 +109,14 @@ public class Movie {
         android:paddingLeft="10dp"
         android:paddingEnd="10dp"
         android:paddingRight="10dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/movie_item__iv_poster"
         app:layout_constraintTop_toBottomOf="@+id/movie_item__tv_name"
         tools:text="Movie description" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
 Для того что бы сообщить RecyclerView какие данные следует отображать, используется Adapter. Адаптер соединяет данные с представлением. Адаптер, который используется в RecyclerView, должен наследоваться от абстрактного класса RecyclerView.Adapter. Этот класс определяет три метода:
@@ -134,74 +129,56 @@ public class Movie {
 
 Попробуем написать адаптер для списка фильмов:
 
-```java
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+```kotlin
+class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieViewHolder>() {
 
-    private final List<Movie> movies;
-
-    public MovieAdapter(List<Movie> movies) {
-        this.movies = movies;
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MovieViewHolder {
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)
+        return MovieViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_item, viewGroup, false);
-        return new MovieViewHolder(view);
+    override fun onBindViewHolder(viewHolder: MovieViewHolder, i: Int) {
+        val movie = movies[i]
+        viewHolder.bind(movie)
+        viewHolder.itemView.tag = movie
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder viewHolder, int i) {
-        viewHolder.bind(movies.get(i));
+    override fun getItemCount(): Int {
+        return movies.size
     }
 
-    @Override
-    public int getItemCount() {
-        return movies.size();
-    }
+    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    static final class MovieViewHolder extends RecyclerView.ViewHolder {
+        private val nameTextView: TextView = itemView.findViewById(R.id.movie_item__tv_name)
+        private val descriptionTextView: TextView = itemView.findViewById(R.id.movie_item__tv_description)
+        private val posterImageView: ImageView = itemView.findViewById(R.id.movie_item__iv_poster)
 
-        private final TextView nameTextView;
-        private final TextView descriptionTextView;
-        private final ImageView posterImageView;
-
-        public MovieViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nameTextView = itemView.findViewById(R.id.movie_item__tv_name);
-            descriptionTextView = itemView.findViewById(R.id.movie_item__tv_description);
-            posterImageView = itemView.findViewById(R.id.movie_item__iv_poster);
-        }
-
-        private void bind(@NonNull Movie movie) {
-            nameTextView.setText(movie.name);
-            descriptionTextView.setText(movie.description);
-            posterImageView.setImageResource(movie.poster);
+        fun bind(movie: Movie) {
+            nameTextView.text = movie.name
+            descriptionTextView.text = movie.description
+            posterImageView.setImageResource(movie.poster)
         }
 
     }
-
 }
 ```
 
 Теперь свяжем адаптер со списком:
-```java
- @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        RecyclerView recyclerView = findViewById(R.id.activity_main__rv_movies);
-        MovieAdapter movieAdapter = new MovieAdapter(generateMovieList());
-        recyclerView.setAdapter(movieAdapter);
-    }
+```kotlin
+private val moviesAdapter = MoviesAdapter(movies)
 
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+    val recyclerView = findViewById<RecyclerView>(R.id.activity_main__rv_movies)
+    recyclerView.adapter = moviesAdapter
+}
 ```
 
 Запустив приложение, мы снова увидим белый экран. Почему? Нужно подсказать `RecyclerView` как располагать элементы. Для этого вызовем метод `setLayoutManager` и выставим `LinearLayoutManager`.
 
-```java
-LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-recyclerView.setLayoutManager(mLayoutManager);
+```kotlin
+recyclerView.layoutManager = LinearLayoutManager(this)
 ```
 
 <img src="img/movies.png" width="400px"/>
@@ -213,88 +190,90 @@ recyclerView.setLayoutManager(mLayoutManager);
 Теперь давайте разберемся как добавлять элементы в список. Для этого создадим `FabButton`. Floating action button это круглая кнопка предназначенная для выполнения самого главного действия на этом экране.
 
 ```xml
-   <android.support.design.widget.FloatingActionButton
-        android:id="@+id/activity_main__fb_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:tint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/activity_main__fb_add"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:tint="@android:color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:srcCompat="@android:drawable/ic_input_add" />
 ```
 
 ## Действия с RecyclerView
 
-Что бы сделать какое-то действие по нажатию на кнопку, нужно добавить `OnClickListener`. Это интерфейс, который имеет единственный метод `onClick`, этот метод будет вызвал если пользователь нажимает на кнопку. Сделаем так, что бы по клику в наш список добавлялся новый фильм:
+Что бы сделать какое-то действие по нажатию на кнопку, нужно добавить `OnClickListener`. Это интерфейс, который имеет единственный метод `onClick`, этот метод будет вызван если пользователь нажимает на кнопку. Сделаем так, что бы по клику в наш список добавлялся новый фильм:
 
-```java
-    private void setupFabButton() {
-        FloatingActionButton fab = findViewById(R.id.activity_main__fb_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                movies.add(generateNewMovie());
-                movieAdapter.notifyDataSetChanged();
-            }
-        });
-    }
+```kotlin
+//...
+val floatingActionButton = findViewById<FloatingActionButton>(R.id.activity_main__fb_add)
+floatingActionButton.setOnClickListener { onAddClick() }
+//...
+private fun onAddClick() {
+    movies.add(generateNewMovie())
+    moviesAdapter.notifyDataSetChanged()
+}
 ```
 
 <img src="img/add_new_movie.png" width="400px"/>
 
 А теперь давайте сделаем так, что бы наши ячейки были тоже кликабельными. Для этого добавим лисенер для строк списка. Пускай по клику на строку появится короткое сообщение с названием выбранного фильма:
 
-```java
+```kotlin
+class MoviesAdapter(
+        private val movies: List<Movie>,
+        private val onMovieClickListener: Listener,
+) : RecyclerView.Adapter<MovieViewHolder>() {
 
-    private final Listener onMovieClickListener;
-
-    public MovieAdapter(List<Movie> movies, Listener onMovieClickListener) {
-        this.movies = movies;
-        this.onMovieClickListener = onMovieClickListener;
+    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MovieViewHolder {
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)
+        view.setOnClickListener { v: View -> onMovieClickListener.onMovieClick(v.tag as Movie) }
+        return MovieViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_item, viewGroup, false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onMovieClickListener.onMovieClick((Movie) v.getTag());
-            }
-        });
-        return new MovieViewHolder(view);
+    override fun onBindViewHolder(viewHolder: MovieViewHolder, i: Int) {
+        val movie = movies[i]
+        viewHolder.bind(movie)
+        viewHolder.itemView.tag = movie
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder viewHolder, final int i) {
-        Movie movie = movies.get(i);
-        viewHolder.bind(movie);
-        viewHolder.itemView.setTag(movie);
+    override fun getItemCount(): Int {
+        return movies.size
+    }
+
+    class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val nameTextView: TextView = itemView.findViewById(R.id.movie_item__tv_name)
+        private val descriptionTextView: TextView = itemView.findViewById(R.id.movie_item__tv_description)
+        private val posterImageView: ImageView = itemView.findViewById(R.id.movie_item__iv_poster)
+
+        fun bind(movie: Movie) {
+            nameTextView.text = movie.name
+            descriptionTextView.text = movie.description
+            posterImageView.setImageResource(movie.poster)
+        }
+
     }
 
     interface Listener {
-
-        void onMovieClick(Movie movie);
-
+        fun onMovieClick(movie: Movie)
     }
-
 }
 ```
 
-```java
- movieAdapter = new MovieAdapter(movies, new MovieAdapter.Listener() {
-            @Override
-            public void onMovieClick(Movie movie) {
-                Toast.makeText(MainActivity.this, movie.name, Toast.LENGTH_SHORT).show();
-            }
-        });
+```kotlin
+//...
+private val moviesAdapter = MoviesAdapter(movies, this)
+//...
+override fun onMovieClick(movie: Movie) {
+    Toast.makeText(this, movie.name, Toast.LENGTH_SHORT).show()
+}
 ```
 
 <img src="img/toast.png" width="400px"/>
 
-Простейший пример использования `RecyclerView` можно посмотреть [тут](https://github.com/otopba/polis-mail-ru-recyclerview-sample)
+Полный исходный код можно посмотреть [тут](https://github.com/polis-mail-ru/2021-android-recyclerview-sample)
 
 ## Что почитать
 

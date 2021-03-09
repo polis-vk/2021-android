@@ -49,32 +49,34 @@ highlight: true
 
 Для использования этого ресурса, вам необходимо загрузить его в коде приложения. Для `Activity` это метод `onCreate()`. Например, если ваш файл называется `example.xml`, загрузить его можно следующим способом:
 
-```java
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.example);
-} 
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.string.example)
+}
 ```
 
 Этот же макет можно было создать при помощи кода следующим образом:
 
-```java
-@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FrameLayout frameLayout = new FrameLayout(this);
-        TextView textView = new TextView(this);
-        textView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-        textView.setText("Hello World");
-        frameLayout.addView(textView);
-        setContentView(frameLayout);
-    }
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val frameLayout = FrameLayout(this)
+    val textView = TextView(this)
+    textView.layoutParams =
+        FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+    textView.text = "Hello World"
+    frameLayout.addView(textView)
+    setContentView(frameLayout)
+}
 ```
 
 ## Атрибуты xml
 
-Каждый объект `View` поддерживает атрибуты XML. Некоторые атрибуты характерны только для конкретного типа `View` (например, объект `TextView` поддерживает атрибут `textSize`), однако эти атрибуты также наследуются любыми объектами `View`, которые могут наследовать этот класс. Некоторые атрибуты являются общими для всех объектов `View,` поскольку они наследуются от корневого класса `View` (такие как атрибут `id`)
+Каждый объект `View` поддерживает атрибуты XML. Некоторые атрибуты характерны только для конкретного типа `View` (например, объект `TextView` поддерживает атрибут `textSize`), однако эти атрибуты также наследуются любыми объектами `View`, которые могут наследовать этот класс. Некоторые атрибуты являются общими для всех объектов `View,` поскольку они наследуются от корневого класса `View` (такие, как атрибут `id`)
 
 **Атрибут id**
 
@@ -165,7 +167,7 @@ android:id="@+id/my_button"
 
 <img src="img/dp.png" width="1200px"/>
 
-Т.е. когда экран имеет режим `mdpi`, `1dp = 1px`. View шириной `100dp` будет выглядеть также как и View шириной `100px`.
+Т.е. когда экран имеет режим `mdpi`, `1dp = 1px`. View шириной `100dp` будет выглядеть так же как и View шириной `100px`.
 
 Если, например, у нас экран с низким разрешением, то используется режим `ldpi`. В этом случае `1dp = 0.75px`. View шириной `100dp` будет выглядеть так же как View шириной `75px`.
 
@@ -322,7 +324,7 @@ android:id="@+id/my_button"
 
 <img src="img/linear_layout_horizontal.png" width="400px"/>
 
-Для управления местом, занимаемым каждым элементом, используется атрибут `layout_weight`. Этот атрибут указывает "значимость" элемента. Чем больше значение, тем более высокий приоритет при будет отдам элементу, при расчетах размера `View`.
+Для управления местом, занимаемым каждым элементом, используется атрибут `layout_weight`. Этот атрибут указывает "значимость" элемента. Чем больше значение, тем более высокий приоритет будет отдан элементу, при расчетах размера `View`.
 
 Равный вес для всех элементов:
 
@@ -359,7 +361,7 @@ android:id="@+id/my_button"
 
 <img src="img/cat_equal_weight.png" width="400px"/>
 
-Почему изображение все равно занимает больше места? Из-за того что у нас стоит `layout_width="wrap_content"` `TextView` может ужиматься. Для того что бы недопустить этого, нужно установить ширину равную `0dp`. Такое значение указывает, что элементу стоит занимать все свободное место что ему доступно.
+Почему изображение все равно занимает больше места? Из-за того что у нас стоит `layout_width="wrap_content"` `TextView` может ужиматься. Для того что бы не допустить этого, нужно установить ширину равную `0dp`. Такое значение указывает, что элементу стоит занимать все свободное место, что ему доступно.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

@@ -41,9 +41,9 @@ highlight: true
 
 ```groovy
 dependencies {
-...
-    compile 'com.android.support.constraint:constraint-layout:1.1.3'
-...
+//...
+    compile 'androidx.constraintlayout:constraintlayout:2.0.4'
+//...
 }
 ```
 
@@ -529,7 +529,7 @@ dependencies {
 ```
 <img src="img/simple_chain.png" width="400px"/>
 
-Цепь элементов имеет тип `layout_constraintHorizontal_chainStyle` или `layout_constraintVertical_chainStyle`, по-умолчанию тип равен `spread`, что означает равномерно распределение элементов.
+Цепь элементов имеет тип `layout_constraintHorizontal_chainStyle` или `layout_constraintVertical_chainStyle`, по умолчанию тип равен `spread`, что означает равномерно распределение элементов.
 
 Для того, что бы установить тип цепи, необходимо добавить атрибут первому из элементов цепи.
 
@@ -861,7 +861,7 @@ dependencies {
 
 ## Другие возможности ConstraintLayout
 
-Библиотека `ConstraintLayout` переодически обновляется и добавляются все новые и новые возможности.
+Библиотека `ConstraintLayout` периодически обновляется и добавляются все новые и новые возможности.
 
 <img src="img/new_in_constraint.gif" width="400px"/>
 
