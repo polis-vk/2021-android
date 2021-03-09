@@ -133,7 +133,8 @@ data class Movie(val name: String, val description: String, val poster: Int)
 class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MovieViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)
+        val view =
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)
         return MovieViewHolder(view)
     }
 
@@ -150,7 +151,8 @@ class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movi
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val nameTextView: TextView = itemView.findViewById(R.id.movie_item__tv_name)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.movie_item__tv_description)
+        private val descriptionTextView: TextView =
+            itemView.findViewById(R.id.movie_item__tv_description)
         private val posterImageView: ImageView = itemView.findViewById(R.id.movie_item__iv_poster)
 
         fun bind(movie: Movie) {
@@ -160,6 +162,7 @@ class MoviesAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movi
         }
 
     }
+
 }
 ```
 
@@ -222,12 +225,13 @@ private fun onAddClick() {
 
 ```kotlin
 class MoviesAdapter(
-        private val movies: List<Movie>,
-        private val onMovieClickListener: Listener,
+    private val movies: List<Movie>,
+    private val onMovieClickListener: Listener,
 ) : RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MovieViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)
+        val view =
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)
         view.setOnClickListener { v: View -> onMovieClickListener.onMovieClick(v.tag as Movie) }
         return MovieViewHolder(view)
     }
@@ -245,7 +249,8 @@ class MoviesAdapter(
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val nameTextView: TextView = itemView.findViewById(R.id.movie_item__tv_name)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.movie_item__tv_description)
+        private val descriptionTextView: TextView =
+            itemView.findViewById(R.id.movie_item__tv_description)
         private val posterImageView: ImageView = itemView.findViewById(R.id.movie_item__iv_poster)
 
         fun bind(movie: Movie) {
