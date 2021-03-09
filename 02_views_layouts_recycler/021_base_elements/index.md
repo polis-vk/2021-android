@@ -687,6 +687,5 @@ android:id="@+id/my_button"
 
 ## Что почитать
 
-- https://developer.android.com/guide/topics/ui/declaring-layout
-- https://proandroiddev.com/android-developer-beginner-faq-1-margin-vs-padding-f5403c81d7e6
-- https://developers.google.com/training/android/
+- [https://developer.android.com/guide/topics/ui/declaring-layout](https://developer.android.com/guide/topics/ui/declaring-layout)
+- [https://proandroiddev.com/android-developer-beginner-faq-1-margin-vs-padding-f5403c81d7e6](https://proandroiddev.com/android-developer-beginner-faq-1-margin-vs-padding-f5403c81d7e6)

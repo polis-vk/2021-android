@@ -57,6 +57,6 @@ floatingActionButton.setOnTouchListener(View.OnTouchListener { _, event ->
 
 ## Что почитать
 
-- https://developer.android.com/guide/topics/ui/ui-events
-- https://developer.android.com/training/gestures/viewgroup
-- https://guides.codepath.com/android/gestures-and-touch-events
+- [https://developer.android.com/guide/topics/ui/ui-events](https://developer.android.com/guide/topics/ui/ui-events)
+- [https://developer.android.com/training/gestures/viewgroup](https://developer.android.com/training/gestures/viewgroup)
+- [https://guides.codepath.com/android/gestures-and-touch-events](https://guides.codepath.com/android/gestures-and-touch-events)

@@ -277,5 +277,4 @@ override fun onMovieClick(movie: Movie) {
 
 ## Что почитать
 
-- https://developer.android.com/guide/topics/ui/layout/recyclerview
-- https://google-developer-training.gitbooks.io/android-developer-fundamentals-course-concepts/content/en/Unit%202/44_c_recyclerview.html
+- [https://developer.android.com/guide/topics/ui/layout/recyclerview](https://developer.android.com/guide/topics/ui/layout/recyclerview)
