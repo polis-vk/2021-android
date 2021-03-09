@@ -176,7 +176,7 @@ class HelloUsernameActivity : AppCompatActivity() {
 ```xml
 <View
     android:id="@+id/unique_id_name"
-	android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 ```
 
@@ -185,11 +185,11 @@ class HelloUsernameActivity : AppCompatActivity() {
 ```xml
 <View
     android:id="@+id/unique_id_name"
-	android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 
 <View
-	android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintLeftToRightOf="@id/unique_id_name"/>
 ```
