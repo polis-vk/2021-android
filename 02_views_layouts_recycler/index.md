@@ -10,3 +10,4 @@ title: Курс Android разработки в Технополисе
 - [RecyclerView](./023_recycler_view/)
 - [Обработка взаимодействия](./024_interaction/)
 
+[Презентация](./presentation.pdf)

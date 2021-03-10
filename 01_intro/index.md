@@ -9,3 +9,5 @@ title: Курс Android разработки в Технополисе 2021
 - [Hello World Internals](./012_internals/)
 - [Hello World Advanced](./013_advanced_hello_world/)
 - [Делаем приложение огонь!](./014_doom_fire/)
+
+[Презентация](./presentation.pdf)
