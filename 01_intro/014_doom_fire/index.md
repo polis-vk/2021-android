@@ -131,75 +131,72 @@ override fun onDraw(canvas: Canvas) {
 
 ### Круги
 
+```kotlin
+val centerX = width / 2f
+val centerY = height / 2f
+val padding = 50
+val minSide = min(width, height)
+val contentSize = minSide - 2 * padding
+val overlap = 300
+val radius = (contentSize + overlap) / 4f
+val dist = 2 * radius - overlap
+
+val x1 = centerX - dist / 2f
+val x2 = centerX + dist / 2f
+val x3 = centerX
+
+val d = dist / 2 / sqrt(3.0).toFloat()
+val y1 = centerY + d
+val y3 = centerY - 2 * d
+
+paint.color = Color.YELLOW and 0x7fffffff
+canvas.drawCircle(x1, y1, radius, paint)
+paint.color = Color.MAGENTA and 0x7fffffff
+canvas.drawCircle(x2, y1, radius, paint)
+paint.color = Color.BLUE and 0x7fffffff
+canvas.drawCircle(x3, y3, radius, paint)
 ```
-    int centerX = width / 2;
-    int centerY = height / 2;
-    int padding = 50;
-    int minSide = Math.min(width, height);
-    int contentSize = minSide - 2 * padding;
-    int overlap = 300;
-    int radius = (contentSize + overlap) / 4;
-    int dist = 2 * radius - overlap;
 
-    float x1 = centerX - dist / 2;
-    float x2 = centerX + dist / 2;
-    float x3 = centerX;
-
-    float d = dist / 2 / (float) Math.sqrt(3f);
-    float y1 = centerY + d;
-    float y2 = y1;
-    float y3 = centerY - 2 * d;
-
-    paint.setColor(Color.YELLOW & 0x7fffffff);
-    canvas.drawCircle(x1, y1, radius, paint);
-    paint.setColor(Color.MAGENTA & 0x7fffffff);
-    canvas.drawCircle(x2, y2, radius, paint);
-    paint.setColor(Color.BLUE & 0x7fffffff);
-    canvas.drawCircle(x3, y3, radius, paint);
-```
-
-<img src="img/0803_circles.png"/>
+<img src="img/0804_circles.png"/>
 
 ### Произвольные фигуры
 
+```kotlin
+val centerX = width / 2f
+val centerY = height / 2f
+val padding = 50
+val minSide = min(width, height)
+val contentSize = minSide - 2 * padding
+
+val segmentSize = contentSize / 3f
+
+val path = Path()
+path.moveTo(segmentSize, 0f)
+path.lineTo(2 * segmentSize, 0f)
+path.lineTo(2 * segmentSize, segmentSize)
+path.lineTo(3 * segmentSize, segmentSize)
+path.lineTo(3 * segmentSize, 3 * segmentSize)
+path.lineTo(2 * segmentSize, 3 * segmentSize)
+path.lineTo(2 * segmentSize, 2 * segmentSize)
+path.lineTo(segmentSize, 2 * segmentSize)
+path.lineTo(segmentSize, 3 * segmentSize)
+path.lineTo(0f, 3 * segmentSize)
+path.lineTo(0f, segmentSize)
+path.lineTo(segmentSize, segmentSize)
+path.lineTo(segmentSize, 0f)
+
+path.offset(centerX - 1.5f * segmentSize, centerY - 1.5f * segmentSize)
+
+paint.color = Color.WHITE
+paint.style = Paint.Style.STROKE
+paint.strokeCap = Paint.Cap.ROUND
+paint.strokeJoin = Paint.Join.ROUND
+paint.strokeWidth = 20f
+
+canvas.drawPath(path, paint)
 ```
-    int centerX = width / 2;
-    int centerY = height / 2;
-    int padding = 50;
-    int minSide = Math.min(width, height);
-    int contentSize = minSide - 2 * padding;
 
-    float segmentSize = contentSize / 3;
-
-    Path path = new Path();
-    path.moveTo(segmentSize, 0);
-    path.lineTo(2 * segmentSize, 0);
-    path.lineTo(2 * segmentSize, segmentSize);
-    path.lineTo(3 * segmentSize, segmentSize);
-    path.lineTo(3 * segmentSize, 3 * segmentSize);
-    path.lineTo(2 * segmentSize, 3 * segmentSize);
-    path.lineTo(2 * segmentSize, 2 * segmentSize);
-    path.lineTo(segmentSize, 2 * segmentSize);
-    path.lineTo(segmentSize, 3 * segmentSize);
-    path.lineTo(0, 3 * segmentSize);
-    path.lineTo(0, segmentSize);
-    path.lineTo(segmentSize, segmentSize);
-    path.lineTo(segmentSize, 0);
-
-    path.offset(centerX - 1.5f * segmentSize, centerY - 1.5f * segmentSize);
-
-    paint.setColor(Color.WHITE);
-    paint.setStyle(Paint.Style.STROKE);
-    paint.setStrokeCap(Paint.Cap.ROUND);
-    paint.setStrokeJoin(Paint.Join.ROUND);
-    paint.setStrokeWidth(20);
-
-    canvas.drawPath(path, paint);
-
-```
-
-<img src="img/0804_bandersnatch.png"/>
-
+<img src="img/0805_bandersnatch.png"/>
 
 Это далеко не исчерпывающий список того, что можно сделать при помощи `Canvas`, а непосредственно рисование -- не единственный аспект имплементации кастомных View. Подробнее эта тема будет освещена в следующих лекциях, а пока рекомендую по мере необходимости смотреть в [документацию по Canvas](https://developer.android.com/reference/android/graphics/Canvas) и искать методы, которые делают то, что нужно.
 
@@ -215,52 +212,53 @@ override fun onDraw(canvas: Canvas) {
 2. Код, который вычисляет что-то постоянное, не зависящее ни от чего, можно выполнить в конструкторе. Например, инициализацию объекта `Paint` нужными параметрами.
 
 С таким подходом код последнего примера будет выглядеть так:
-```
-    private final Paint paint = new Paint();
-    private final Path path = new Path();
 
-    public DemoDrawingView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(20);
+```kotlin
+class DemoDrawingView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
+
+    private val paint = Paint()
+    private val path = Path()
+
+    init {
+        paint.color = Color.WHITE
+        paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.ROUND
+        paint.strokeJoin = Paint.Join.ROUND
+        paint.strokeWidth = 20f
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        int centerX = w / 2;
-        int centerY = h / 2;
-        int padding = 50;
-        int minSide = Math.min(w, h);
-        int contentSize = minSide - 2 * padding;
-
-        float segmentSize = contentSize / 3f;
-
-        path.reset();
-
-        path.moveTo(segmentSize, 0);
-        path.lineTo(2 * segmentSize, 0);
-        path.lineTo(2 * segmentSize, segmentSize);
-        path.lineTo(3 * segmentSize, segmentSize);
-        path.lineTo(3 * segmentSize, 3 * segmentSize);
-        path.lineTo(2 * segmentSize, 3 * segmentSize);
-        path.lineTo(2 * segmentSize, 2 * segmentSize);
-        path.lineTo(segmentSize, 2 * segmentSize);
-        path.lineTo(segmentSize, 3 * segmentSize);
-        path.lineTo(0, 3 * segmentSize);
-        path.lineTo(0, segmentSize);
-        path.lineTo(segmentSize, segmentSize);
-        path.lineTo(segmentSize, 0);
-
-        path.offset(centerX - 1.5f * segmentSize, centerY - 1.5f * segmentSize);
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        val centerX = w / 2f
+        val centerY = h / 2f
+        val padding = 50
+        val minSide = min(w, h)
+        val contentSize = minSide - 2 * padding
+        val segmentSize = contentSize / 3f
+        path.reset()
+        path.moveTo(segmentSize, 0f)
+        path.lineTo(2 * segmentSize, 0f)
+        path.lineTo(2 * segmentSize, segmentSize)
+        path.lineTo(3 * segmentSize, segmentSize)
+        path.lineTo(3 * segmentSize, 3 * segmentSize)
+        path.lineTo(2 * segmentSize, 3 * segmentSize)
+        path.lineTo(2 * segmentSize, 2 * segmentSize)
+        path.lineTo(segmentSize, 2 * segmentSize)
+        path.lineTo(segmentSize, 3 * segmentSize)
+        path.lineTo(0f, 3 * segmentSize)
+        path.lineTo(0f, segmentSize)
+        path.lineTo(segmentSize, segmentSize)
+        path.lineTo(segmentSize, 0f)
+        path.offset(centerX - 1.5f * segmentSize, centerY - 1.5f * segmentSize)
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawPath(path, paint);
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
     }
+}
 ```
 
 Этот код делает ровно то же самое с тем же видимым результатом, но написан он так, чтобы максимально быстро работать в условиях, когда Android отрисовывает экран нашего приложения 60 раз в секунду.
@@ -276,123 +274,117 @@ override fun onDraw(canvas: Canvas) {
 - Создайте верстку для `MainActivity`, в которой весь экран будет занимать `FireView`.
 
 Заготовка класса FireView должна выглядеть так:
-```
-public class FireView extends View {
 
-    public FireView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
+```kotlin
+class FireView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {}
 
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-
-    }
+    override fun onDraw(canvas: Canvas) {}
 }
 ```
 
 Теперь напишем огненный код, руководствуясь [оригинальной статьёй](http://fabiensanglard.net/doom_fire_psx/), которую надо сейчас прочитать, если вы этого еще не сделали.
 
-Прежде всего нам понадобится палитра цветов для отрисовки пикселей огня с разной температурой. Определим её как массив с шестнадцатиричными значениями цветов в цветовой схеме ARGB:
+Прежде всего нам понадобится палитра цветов для отрисовки пикселей огня с разной температурой. Определим её как массив со значениями цветов в цветовой схеме RGB:
+
+```kotlin
+private val firePalette = intArrayOf(
+    0x070707,
+    0x1F0707,
+    0x2F0F07,
+    0x470F07,
+    0x571707,
+    0x671F07,
+    0x771F07,
+    0x8F2707,
+    0x9F2F07,
+    0xAF3F07,
+    0xBF4707,
+    0xC74707,
+    0xDF4F07,
+    0xDF5707,
+    0xDF5707,
+    0xD75F07,
+    0xD75F07,
+    0xD7670F,
+    0xCF6F0F,
+    0xCF770F,
+    0xCF7F0F,
+    0xCF8717,
+    0xC78717,
+    0xC78F17,
+    0xC7971F,
+    0xBF9F1F,
+    0xBF9F1F,
+    0xBFA727,
+    0xBFA727,
+    0xBFAF2F,
+    0xB7AF2F,
+    0xB7B72F,
+    0xB7B737,
+    0xCFCF6F,
+    0xDFDF9F,
+    0xEFEFC7,
+    0xFFFFFF
+)
 ```
-    private static final int[] firePalette = {
-            0xff070707,
-            0xff1F0707,
-            0xff2F0F07,
-            0xff470F07,
-            0xff571707,
-            0xff671F07,
-            0xff771F07,
-            0xff8F2707,
-            0xff9F2F07,
-            0xffAF3F07,
-            0xffBF4707,
-            0xffC74707,
-            0xffDF4F07,
-            0xffDF5707,
-            0xffDF5707,
-            0xffD75F07,
-            0xffD75F07,
-            0xffD7670F,
-            0xffCF6F0F,
-            0xffCF770F,
-            0xffCF7F0F,
-            0xffCF8717,
-            0xffC78717,
-            0xffC78F17,
-            0xffC7971F,
-            0xffBF9F1F,
-            0xffBF9F1F,
-            0xffBFA727,
-            0xffBFA727,
-            0xffBFAF2F,
-            0xffB7AF2F,
-            0xffB7B72F,
-            0xffB7B737,
-            0xffCFCF6F,
-            0xffDFDF9F,
-            0xffEFEFC7,
-            0xffFFFFFF
-    };
-```
-В этой палитре цвета меняются от почти черного `0xff070707` по индексу 0 до белого `0xffFFFFFF` по индексу `firePalette.length - 1`.
+
+В этой палитре цвета меняются от почти черного `0x070707` по индексу 0 до белого `0xFFFFFF` по индексу `firePalette.length - 1`.
 
 Для представления пикселей огня нам нужен двумерный массив, в котором мы будем хранить значение температуры пикселей от `0` до `firePalette.length - 1`, и размер этого массива должен совпадать с размером View, а значит, инициализировать его следует в методе `onSizeChanged`. Последняя строчка этого массива, которая соответствует нижней грани View, должна быть заполнена пикселями максимальной температуры, которые будут служить источниками огня.
-```
-	private int[][] firePixels;
-	private int fireWidth;
-	private int fireHeight;
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        fireWidth = w;
-        fireHeight = h;
-        firePixels = new int[fireWidth][fireHeight];
+```kotlin
+private lateinit var firePixels: Array<IntArray>
+private var fireWidth = 0
+private var fireHeight = 0
 
-        for (int x = 0; x < fireWidth; x ++) {
-            firePixels[x][fireHeight - 1] = firePalette.length - 1;
-        }
+override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    fireWidth = w
+    fireHeight = h
+    firePixels = Array(fireWidth) { IntArray(fireHeight) }
+    for (x in 0 until fireWidth) {
+        firePixels[x][fireHeight - 1] = firePalette.size - 1
     }
-
+}
 ```
 
 В методе `onDraw` надо отрисовать пиксели огня, для этого напишем метод `drawFire`, который будет брать значения температуры всех пикселей из массива `firePixels` и отрисовывать их на `Canvas` при помощи палитры `firePixels`. Для этого нам понадобится еще объект `Paint`:
-```
-	private final Paint paint = new Paint();
 
-	@Override
-    protected void onDraw(Canvas canvas) {
-        drawFire(canvas);
-    }
+```kotlin
+private val paint: Paint = Paint()
 
-    private void drawFire(Canvas canvas) {
-        for (int x = 0; x < fireWidth; x++) {
-            for (int y = 0; y < fireHeight; y++) {
-                int temperature = firePixels[x][y];
-                if (temperature < 0) {
-                    temperature = 0;
-                }
-                if (temperature >= firePalette.length) {
-                    temperature = firePalette.length - 1;
-                }
-                @ColorInt int color = firePalette[temperature];
-                paint.setColor(color);
+override fun onDraw(canvas: Canvas) {
+    drawFire(canvas)
+}
 
-                canvas.drawPoint(x, y, paint);
+private fun drawFire(canvas: Canvas) {
+    for (x in 0 until fireWidth) {
+        for (y in 0 until fireHeight) {
+            var temperature = firePixels[x][y]
+            if (temperature < 0) {
+                temperature = 0
             }
+            if (temperature >= firePalette.size) {
+                temperature = firePalette.size - 1
+            }
+            val color = firePalette[temperature]
+            paint.color = color
+            canvas.drawPoint(x.toFloat(), y.toFloat(), paint)
         }
     }
+}
 ```
 
 Здесь мы обходим весь массив пикселей, и для каждого пикселя берем его температуру и, на всякий случай проверив выход за границы массива, используем температуру в качестве индекса в палитре. После чего используем метод `Canvas.drawPoint` для отрисовки одного пикселя нужного цвета.
 
 Попробуйте запустить этот код. При запуске на эмуляторе мы видим белый экран вместо ожидаемого черного экрана с белой полосой огненных пикселей внизу. Почему? В каком месте кода мы допустили ошибку?
 
-На самом деле, в логике кода нет ошибки. Проблема в том, что мы используем неподходящие для нашей задачи методы. Мы рисуем пиксели в цикле при помощи метода `Canvas.drawPoint`. Количество пикселей зависит от экрана устройстов, но можно приблизительно считать его равным одному миллиону. А вот метод `Canvas.drawPoint`, как и вызов любого другого метода `Canvas.drawSomething` при рисовании на экране, устроен так, что в момент вызова ничего фактические не рисуется, а формируется Open GL команда на отрисовку. Потом, после того, как `onDraw` отработал, все команды для отрисовки одного кадра собираются вместе и отправляются в графический процессор, где они фактически выполняются. Отрисовать за раз миллион пикселей дял современного Android устройства не проблема, а вот выполнить миллион команд на отрисовку одного пикслеля -- это непосильная задача.
+На самом деле, в логике кода нет ошибки. Проблема в том, что мы используем неподходящие для нашей задачи методы. Мы рисуем пиксели в цикле при помощи метода `Canvas.drawPoint`. Количество пикселей зависит от экрана устройств, но можно приблизительно считать его равным одному миллиону. А вот метод `Canvas.drawPoint`, как и вызов любого другого метода `Canvas.drawSomething` при рисовании на экране, устроен так, что в момент вызова ничего фактические не рисуется, а формируется Open GL команда на отрисовку. Потом, после того, как `onDraw` отработал, все команды для отрисовки одного кадра собираются вместе и отправляются в графический процессор, где они фактически выполняются. Отрисовать за раз миллион пикселей для современного Android устройства не проблема, а вот выполнить миллион команд на отрисовку одного пикселя -- это непосильная задача.
 
 Белый экран, который мы видим при старте приложения с таким кодом -- это просто белый фон окна, а реальная отрисовка `FireView` еще не произошла. Пока мы смотрим на это белое окно, графический процессор пытается переварить миллион Open GL команд, и это может длиться довольно долго (На моём смартфоне с Adreno 630 GPU `FireView` отрисовывается за 20 секунд).
 
@@ -407,80 +399,90 @@ public class FireView extends View {
 Таким образом, GPU должен будет выполнить всего одну операцию отрисовки битмапа, а он умеет делать это очень хорошо и быстро.
 
 Битмапы в Android представлены классом `android.graphics.Bitmap`. Мы создадим один инстанс `Bitmap` и будем его переиспользовать при отрисовке. Добавьте поле в класс `FireView`:
-```
-private Bitmap bitmap;
+
+```kotlin
+private lateinit var bitmap: Bitmap
 ```
 
 А в метод `onSizeChanged` добавьте код, который создаст битмап нужного размера при изменении размеров View:
-```
-bitmap = Bitmap.createBitmap(fireWidth, fireHeight, Bitmap.Config.RGB_565);
+
+```kotlin
+bitmap = Bitmap.createBitmap(fireWidth, fireHeight, Bitmap.Config.RGB_565)
 ```
 
 В методе `drawFire` замените две строчки, которые рисовали пиксели в Canvas (и из-за которых были все тормоза):
+
+```kotlin
+paint.color = color
+canvas.drawPoint(x.toFloat(), y.toFloat(), paint)
 ```
-paint.setColor(color);
-canvas.drawPoint(x, y, paint);
-```
+
 на одну строчку, которая установит цвет пикселя в битмапе:
+
+```kotlin
+bitmap.setPixel(x, y, color)
 ```
-bitmap.setPixel(x, y, color);
-```
+
 А в конце метода после цикла по всем пикселям добавьте одну строчку для отрисовки битмапа в Canvas:
+
+```kotlin
+canvas.drawBitmap(bitmap, 0f, 0f, paint)
 ```
-canvas.drawBitmap(bitmap, 0, 0, paint);
-```
+
 Если теперь запустить приложение, то вместо белого экрана вы увидите черный экран с белой полосой внизу, которая соответствует последней строчке в массиве пикселей -- эти пиксели имеют максимальную температуру и поэтому, в соответствии с нашей палитрой, отрисовываются белым цветом.
 
-<img src="img/0805_fire_0.png" width="400px"/>
+<img src="img/0806_fire_0.png" width="400px"/>
 
 ## Распространение огня
 
 Теперь, когда основа "движка" для отрисовки огня готова, осталось только написать код, который воспроизводит распространение огня вверх, как это описано в оригинальной статье. Для этого создадим новый метод `spreadFire`, который будем вызывать из `onDraw` перед отрисовкой:
-```
-@Override
-protected void onDraw(Canvas canvas) {
-    spreadFire();
-    drawFire(canvas);
+
+```kotlin
+override fun onDraw(canvas: Canvas) {
+    spreadFire()
+    drawFire(canvas)
 }
 
-private void spreadFire() {
-	// TODO: здесь будет алгоритм распространения огня
+private fun spreadFire() {
+    // TODO: здесь будет алгоритм распространения огня
 }
 ```
 
 В алгоритме распространения огня используются случайные числа, поэтому нам понадобится инстанс `java.util.Random`, который мы сохраним в поле класса `FireView`:
-```
-private final Random random = new Random();
+
+```kotlin
+private val random = Random()
 ```
 
 Алгоритм распространения симулирует распространение частиц огня от источника вверх, при этом в движение частиц добавляется элемент случайности, а их температура постоянно уменьшается. Алгоритм в процессе формирования очередного кадра работает следующим образом:
 - Обход всех пикселей огня производится построчно сверху вниз (чтобы менять значения температуры пикселей в порядке, обратном причинному)
-- Для каждого пикселя огня находится его пиксель-прообраз из предыдущего кадра, который находится ниже. При этом добавляеются небольшие случайные отклонения по вертикали и горизонтали.
+- Для каждого пикселя огня находится его пиксель-прообраз из предыдущего кадра, который находится ниже. При этом добавляются небольшие случайные отклонения по вертикали и горизонтали.
 - Температура пикселя вычисляется как температура его прообраза минус небольшая случайная величина.
 
-Вот код этого алгоримя (который надо написать внутри метода `spreadFire`):
-```
-    for (int y = 0; y < fireHeight - 1; y++) {
-        for (int x = 0; x < fireWidth; x++) {
-            int rand_x = random.nextInt(3);
-            int rand_y = random.nextInt(6);
-            int dst_x = Math.min(fireWidth - 1, Math.max(0, x + rand_x - 1));
-            int dst_y = Math.min(fireHeight - 1, y + rand_y);
-            int deltaFire = -(rand_x & 1);
-            firePixels[x][y] = Math.max(0, firePixels[dst_x][dst_y] + deltaFire);
-        }
+Вот код этого алгоритма (который надо написать внутри метода `spreadFire`):
+
+```kotlin
+for (y in 0 until fireHeight - 1) {
+    for (x in 0 until fireWidth) {
+        val randX = random.nextInt(3)
+        val randY = random.nextInt(6)
+        val dstX = min(fireWidth - 1, max(0, x + randX - 1))
+        val dstY = min(fireHeight - 1, y + randY)
+        val deltaFire = -(randX and 1)
+        firePixels[x][y] = max(0, firePixels[dstX][dstY] + deltaFire)
     }
+}
 ```
 
 ## Обновление кадров
 
 Мы написали код, который для каждого кадра выполняет алгоритм распространения огня и отрисовывает обновленное состояние на экране. Если мы его сейчас запустим, то увидим только один первый кадр огня: небольшой эффект над нижней полосой источника огня. Android отрисовывает наш `FireView` и считает, что всё ок -- работа выполнена. Нам нужно сделать так, чтобы Android перерисовывал `FireView` снова и снова в бесконечном цикле -- тогда мы увидим последовательность смены кадров с горящим огнем. Сделать это очень просто -- надо добавить одну строчку в метод `onDraw`:
-```
-@Override
-protected void onDraw(Canvas canvas) {
-    spreadFire();
-    drawFire(canvas);
-    invalidate();
+
+```kotlin
+override fun onDraw(canvas: Canvas) {
+    spreadFire()
+    drawFire(canvas)
+    invalidate()
 }
 ```
 
@@ -492,42 +494,43 @@ protected void onDraw(Canvas canvas) {
 
 <img src="img/slow_fire.gif"/>
 
-На изображении выше добавлен счетчик FPS -- он показывает приблизительно полкадра в секунду (или 1 кадр за 2 секунды). Причем, скорость работы приложения не сильно зависит от мощности CPU или GPU: на разных устройствах FPS будет отличаться, но не в разы. Это следствие эмпирического правила в мире Android устройств: *скорость работы железа приблизительно пропорциональна рамеру экрана* -- то есть на более мощном устройстве, где наш код мог бы работать быстрее, размер экрана будет пропорционально больше, и нам надо будет за один кадр вычислить и перерисовать больше пикселей -- как следствие, визуально скорость работы не будет сильно отличаться.
+На изображении выше добавлен счетчик FPS -- он показывает приблизительно пол кадра в секунду (или 1 кадр за 2 секунды). Причем скорость работы приложения не сильно зависит от мощности CPU или GPU: на разных устройствах FPS будет отличаться, но не в разы. Это следствие эмпирического правила в мире Android устройств: *скорость работы железа приблизительно пропорциональна размеру экрана* -- то есть на более мощном устройстве, где наш код мог бы работать быстрее, размер экрана будет пропорционально больше, и нам надо будет за один кадр вычислить и перерисовать больше пикселей -- как следствие, визуально скорость работы не будет сильно отличаться.
 
 ## Оптимизации
 
 ### Убираем лишние вызовы из цикла
 
-Для того, чтобы ускорить наш огонь, сделаем оптимизацию в методе `drawFire` -- там мы в цикле обходим все пиксели и вызываем `Bitmap.setPixel`. Вместо этого мы будем сохранять пиксели в массив, а потом одним разом передадим его в `Bitmap.setPixels`, который вместо одного пикселя принимает в качестве параметров массив пикселей. Таким образом мы сэкономим на том, что при выполнении кода виртуальная машина не будет миллион раз выполнять инструкцию `invoke-virtual` для вызова метода `Bitmap.setPixel` в цикле, а вместо этого будет выполнять инструкцию `aput` для записи значения в массив, что гораздо быстрее. 
+Для того чтобы ускорить наш огонь, сделаем оптимизацию в методе `drawFire` -- там мы в цикле обходим все пиксели и вызываем `Bitmap.setPixel`. Вместо этого мы будем сохранять пиксели в массив, а потом одним разом передадим его в `Bitmap.setPixels`, который вместо одного пикселя принимает в качестве параметров массив пикселей. Таким образом мы сэкономим на том, что при выполнении кода виртуальная машина не будет миллион раз выполнять инструкцию `invoke-virtual` для вызова метода `Bitmap.setPixel` в цикле, а вместо этого будет выполнять инструкцию `aput` для записи значения в массив, что гораздо быстрее. 
 
 Для этой оптимизации нам придется завести еще одно поле в классе `FireView` для массива пикселей (вообще, довольно часто оказывается, что за лучшее быстродействие приходится расплачиваться памятью):
-```
-private int[] bitmapPixels;
+
+```kotlin
+private var bitmapPixels: IntArray? = null
 ```
 
 В методе `drawFire` замените вызов `setPixel` на запись в массив, а после завершения цикла добавьте вызов `setPixels` для того, чтобы записать массив пикселей в битмап. А перед началом цикла добавьте код, который аллоцирует массив при необходимости:
-```
-private void drawFire(Canvas canvas) {
-    final int pixelCount = fireWidth * fireHeight;
-    if (bitmapPixels == null || bitmapPixels.length < pixelCount ) {
-        bitmapPixels = new int[pixelCount];
-    }
 
-    for (int x = 0; x < fireWidth; x++) {
-        for (int y = 0; y < fireHeight; y++) {
-            int temperature = firePixels[x][y];
+```kotlin
+private fun drawFire(canvas: Canvas) {
+    val pixelCount = fireWidth * fireHeight
+    if (bitmapPixels == null || bitmapPixels!!.size < pixelCount) {
+        bitmapPixels = IntArray(pixelCount)
+    }
+    for (x in 0 until fireWidth) {
+        for (y in 0 until fireHeight) {
+            var temperature = firePixels[x][y]
             if (temperature < 0) {
-                temperature = 0;
+                temperature = 0
             }
-            if (temperature >= firePalette.length) {
-                temperature = firePalette.length - 1;
+            if (temperature >= firePalette.size) {
+                temperature = firePalette.size - 1
             }
-            @ColorInt int color = firePalette[temperature];
-            bitmapPixels[fireWidth * y + x] = color;
+            val color = firePalette[temperature]
+            bitmapPixels!![fireWidth * y + x] = color
         }
     }
-    bitmap.setPixels(bitmapPixels, 0, fireWidth, 0, 0, fireWidth, fireHeight);
-    canvas.drawBitmap(bitmap, 0, 0, paint);
+    bitmap.setPixels(bitmapPixels, 0, fireWidth, 0, 0, fireWidth, fireHeight)
+    canvas.drawBitmap(bitmap, 0f, 0f, paint)
 }
 ```
 
@@ -537,30 +540,36 @@ private void drawFire(Canvas canvas) {
 
 ### Одномерный массив вместо двумерного
 
-Заметили в предыдущей оптимизации, что `Bitmap.setPixels` принимает в качестве аргумента одномерный массив, а не двумерный, хотя по сути битмап является двумерным? Наверное, это неспроста, подумали вы -- и вы правы! Обращение к элементам многомерных массивов, как правило, связано с дополнительным накладными расходами, поэтому по возомжности следует их избегать. А у нас как раз есть двумерный массив `firePixels`, в котором мы храним температуры частиц огня. Давайте сделаем его одномерным. 
+Заметили в предыдущей оптимизации, что `Bitmap.setPixels` принимает в качестве аргумента одномерный массив, а не двумерный, хотя по сути битмап является двумерным? Наверное, это неспроста, подумали вы -- и вы правы! Обращение к элементам многомерных массивов, как правило, связано с дополнительным накладными расходами, поэтому по возможности следует их избегать. А у нас как раз есть двумерный массив `firePixels`, в котором мы храним температуры частиц огня. Давайте сделаем его одномерным. 
 
 Для этого замените его декларацию на одномерный вариант:
-```
-private int[] firePixels;
+
+```kotlin
+private lateinit var firePixels: IntArray
 ```
 
 и код аллоцирования также на одномерный вариант:
-```
-firePixels = new int[fireWidth * fireHeight];
+
+```kotlin
+firePixels = IntArray(fireWidth * fireHeight)
 ```
 
 а во всех местах, где происходит обращение к элементам массива по координатам `foo, bar`, замените `firePixels[foo][bar]` на `firePixels[foo + bar * fireWidth]`. Таким образом, пиксели внутри одномерного массива `firePixels` будут храниться построчно: сначала идут все пиксели первой строчки, потом все пиксели второй строчки и т.д. -- это традиционный способ адресации пикселей в одномерных массивах.
 
 Вот так теперь должен выглядеть метод `spreadFire`:
-```
-for (int y = 0; y < fireHeight - 1; y++) {
-    for (int x = 0; x < fireWidth; x++) {
-        int rand_x = random.nextInt(3);
-        int rand_y = random.nextInt(6);
-        int dst_x = Math.min(fireWidth - 1, Math.max(0, x + rand_x - 1));
-        int dst_y = Math.min(fireHeight - 1, y + rand_y);
-        int deltaFire = -(rand_x & 1);
-        firePixels[x + y * fireWidth] = Math.max(0, firePixels[dst_x + dst_y * fireWidth] + deltaFire);
+
+```kotlin
+private fun spreadFire() {
+    for (y in 0 until fireHeight - 1) {
+        for (x in 0 until fireWidth) {
+            val randX = random.nextInt(3)
+            val randY = random.nextInt(6)
+            val dstX = min(fireWidth - 1, max(0, x + randX - 1))
+            val dstY = (fireHeight - 1).coerceAtMost(y + randY)
+            val deltaFire = -(randX and 1)
+            firePixels[x + y * fireWidth] =
+                max(0, firePixels[dstX + dstY * fireWidth] + deltaFire)
+        }
     }
 }
 ```
@@ -576,24 +585,26 @@ for (int y = 0; y < fireHeight - 1; y++) {
 В нашем случае ощутимого ускорения можно достичь, уменьшив количество пикселей огня, которые мы обсчитываем и отрисовываем на каждом кадре. Сейчас количество пикселей огня совпадает с количеством пикселей экрана. Например, на средненьком экране 720x1280 -- это 921600 штук. Если мы уменьшим ширину огня до 150 пикселей, то при сохранении соотношения сторон, весь массив пикселей будет иметь размер 150x266, или около 40000 пикселей  -- более чем в 20 раз меньше.
 
 В методе `onSizeChanged`, где мы инициализируем массив огня и присваиваем переменным `fireWidth` и `fireHeight` значения, равные ширине и высоте View, напишем такой код:
-```
-float aspectRatio = (float) w / h;
-fireWidth = 150;
-fireHeight = (int) (fireWidth / aspectRatio);
+
+```kotlin
+val aspectRatio = w.toFloat() / h
+fireWidth = 150
+fireHeight = (fireWidth / aspectRatio).toInt()
 ```
 
-Теперь огонь горит быстрее, но его размер уменьшился раз в 5 (вполен ожидаемо для экрана шириной 720 пикселей и ширины огня 150 пикселей):
+Теперь огонь горит быстрее, но его размер уменьшился раз в 5 (вполне ожидаемо для экрана шириной 720 пикселей и ширины огня 150 пикселей):
 
 <img src="img/small_fire.gif"/>
 
-Для того, чтобы огонь принял прежние размеры на весь экран, мы в методе `drawFire` вызовыем метод `Canvas.scale` для того, чтобы размер отрисованного битмапа увеличился ровно на столько, на сколько надо для заполнения всей ширины View. Этот вызов надо добавить перед `drawBitmap`:
-```
-float scale = (float) getWidth() / fireWidth;
-canvas.scale(scale, scale);
-canvas.drawBitmap(bitmap, 0, 0, paint);
+Для того чтобы огонь принял прежние размеры на весь экран, мы в методе `drawFire` вызовем метод `Canvas.scale` для того, чтобы размер отрисованного битмапа увеличился ровно на столько, на сколько надо для заполнения всей ширины View. Этот вызов надо добавить перед `drawBitmap`:
+
+```kotlin
+val scale = width.toFloat() / fireWidth
+canvas.scale(scale, scale)
+canvas.drawBitmap(bitmap, 0f, 0f, paint)
 ```
 
 Результат:
 <img src="img/faster_fire.gif"/>
 
-Заметьте -- растягивние битмапа на весь экран при помощи `Canvas.scale` не повлияло на скорость работы приложения (FPS ~30). Так происходит, потому что `Canvas.scale` реализован на уровне Open GL как растягивание текстуры, а GPU очень хорошо умеет растягивать текстуры. С точки зрения скорости отрисовки имеет значение количество оригинальных пикселей текстуры (битмапа).
+Заметьте -- растягивание битмапа на весь экран при помощи `Canvas.scale` не повлияло на скорость работы приложения (FPS ~30). Так происходит, потому что `Canvas.scale` реализован на уровне Open GL как растягивание текстуры, а GPU очень хорошо умеет растягивать текстуры. С точки зрения скорости отрисовки имеет значение количество оригинальных пикселей текстуры (битмапа).
