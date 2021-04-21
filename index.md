@@ -9,5 +9,5 @@ title: Курс Android разработки в Технополисе 2021
 2. [Основы верстки](02_views_layouts_recycler/)
 3. [Kotlin](03-kotlin/)
 5. [Хранение данных](05-storage/)
-7. [Проектирование Android-приложений (UI patterns)](07-ui-patterns/)
-8. [Проектирование Android-приложений (Dependency Injection: pure, Dagger2, Hilt)](08-di/)
+7. [UI patterns (MVC, MVP, MVVM, MVI)](07-ui-patterns/)
+8. [Dependency Injection: pure, Dagger2, Hilt)](08-di/)
