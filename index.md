@@ -10,4 +10,4 @@ title: Курс Android разработки в Технополисе 2021
 3. [Kotlin](03-kotlin/)
 5. [Хранение данных](05-storage/)
 7. [Проектирование Android-приложений (UI patterns)](07-ui-patterns/)
-8. [Dependency Injection (pure DI, Dagger 2, Hilt)](08-di/)
+8. [Проектирование Android-приложений (Dependency Injection: pure, Dagger2, Hilt)](08-di/)

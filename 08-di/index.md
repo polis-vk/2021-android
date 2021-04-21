@@ -584,7 +584,7 @@ class MyApp {
 
 ```sh
 git clone git@github.com:melnikovdv/android-arch-2.git
-git checkout dagger2
+git checkout hilt
 ```
 
 - Application (by using @HiltAndroidApp)
