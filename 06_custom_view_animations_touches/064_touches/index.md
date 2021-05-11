@@ -126,8 +126,10 @@ vt.recycle()
 
 Но не все жесты распознает `GestureDetector`, например, для распознавания жеста приближения, есть специальный класс `ScaleGestureDetector`.
 
+Код примера можно посмотреть [тут](https://github.com/polis-mail-ru/2021-android-rv-swipe-sample)
+
 ## Что почитать
 
-https://developer.android.com/training/gestures
-https://android.jlelse.eu/the-android-touch-system-from-a-slightly-different-perspective-71f29c86369a
-https://developer.android.com/reference/android/view/VelocityTracker
+- [https://developer.android.com/training/gestures](https://developer.android.com/training/gestures)
+- [https://android.jlelse.eu/the-android-touch-system-from-a-slightly-different-perspective-71f29c86369a](https://android.jlelse.eu/the-android-touch-system-from-a-slightly-different-perspective-71f29c86369a)
+- [https://developer.android.com/reference/android/view/VelocityTracker](https://developer.android.com/reference/android/view/VelocityTracker)

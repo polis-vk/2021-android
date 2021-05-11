@@ -239,7 +239,7 @@ override fun onDraw(canvas: Canvas) {
 
 <img src="img/wave_final.png" width="400px"/>
 
-Код примера можно посмотреть [тут](https://github.com/polis-mail-ru/polis-mail-ru-customview-sample)
+Код примера можно посмотреть [тут](https://github.com/polis-mail-ru/2021-android-customview-sample)
 
 ## Что почитать
 
