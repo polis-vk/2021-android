@@ -12,7 +12,7 @@ highlight: true
 
 При этом будем инициировать выполнение задачи в главном (`UI`) потоке нашего приложения и в нём же будем отображать результат.
 
-Для взаимодействия между потоками будем использовать [Handler] (https://developer.android.com/reference/android/os/Handler.html).
+Для взаимодействия между потоками будем использовать [Handler](https://developer.android.com/reference/android/os/Handler.html).
 
 Приложение называется `HandlerThreadSample` (`HandlerThreadSample.zip`).
 
@@ -333,8 +333,8 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-Таким образом: для фоновых задач, которые необходимо выполнять последовательно Android предлагает использовать `HandlerThread`, который внутри своей реализации использует хорошо нам знакомые классы [MessageQueue] (https://developer.android.com/reference/android/os/MessageQueue.html), [Looper] (https://developer.android.com/reference/android/os/Looper.html) и [Handler] (https://developer.android.com/reference/android/os/Handler.html).
+Таким образом: для фоновых задач, которые необходимо выполнять последовательно Android предлагает использовать `HandlerThread`, который внутри своей реализации использует хорошо нам знакомые классы [MessageQueue](https://developer.android.com/reference/android/os/MessageQueue.html), [Looper](https://developer.android.com/reference/android/os/Looper.html) и [Handler](https://developer.android.com/reference/android/os/Handler.html).
 
 ## Что почитать
 
-- [Sending operations to multiple threads] (https://developer.android.com/training/multiple-threads)
+- [Sending operations to multiple threads](https://developer.android.com/training/multiple-threads)

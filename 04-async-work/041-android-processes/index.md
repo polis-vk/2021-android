@@ -23,4 +23,4 @@ highlight: true
 ## Что почитать
 
 - [Application Fundamentals](https://developer.android.com/guide/components/fundamentals)
-- [Processes and threads overview] (https://developer.android.com/guide/components/processes-and-threads.html)
+- [Processes and threads overview](https://developer.android.com/guide/components/processes-and-threads.html)

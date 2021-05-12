@@ -73,4 +73,4 @@ public abstract class IntentService extends Service {
 
 ## Что почитать
 
-- [Optimize for Doze and App Standby] (https://developer.android.com/training/monitoring-device-state/doze-standby)
+- [Optimize for Doze and App Standby](https://developer.android.com/training/monitoring-device-state/doze-standby)

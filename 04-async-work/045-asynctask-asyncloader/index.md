@@ -8,7 +8,7 @@ highlight: true
 
 ## Executor
 
-`Android SDK` включает в себя пакет [java.util.concurrent] (https://developer.android.com/reference/java/util/concurrent/package-summary).
+`Android SDK` включает в себя пакет [java.util.concurrent](https://developer.android.com/reference/java/util/concurrent/package-summary).
 Это один из базовых пакетов, содержащий `примитивы`, необходимые для эффективного программирования в конкурентной среде - многопоточном `окружении`.
 
 В частности, этот пакет содержит `интерфейс` [Executor](https://developer.android.com/reference/java/util/concurrent/Executor.html), на котором базируются классы, поддерживающие выполнение фоновых задач.
@@ -346,5 +346,5 @@ public class InitSplashActivity extends Activity {
 
 ## Что почитать
 
-- [Concurrency] (https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html)
-- [Классика: Java Concurrency In Practice] (https://www.ozon.ru/context/detail/id/3174887)
+- [Concurrency](https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html)
+- [Классика: Java Concurrency In Practice](https://www.ozon.ru/context/detail/id/3174887)

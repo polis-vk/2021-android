@@ -17,5 +17,5 @@ highlight: true
 
 ## Что почитать
 
-- [RxJava] (https://github.com/ReactiveX/RxJava)
+- [RxJava](https://github.com/ReactiveX/RxJava)
 - [Примеры с RxJava](https://habr.com/ru/post/309154/)

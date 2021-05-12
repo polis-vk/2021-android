@@ -8,11 +8,11 @@ highlight: true
 
 ##  MessageQueue
 
-В качестве реализации очереди сообщений Android предлагает использовать класс [MessageQueue] (https://developer.android.com/reference/android/os/MessageQueue.html). Это низкоуровневый `интерфейс`, который, в большинстве случаев, напрямую не используется в приложении.
+В качестве реализации очереди сообщений Android предлагает использовать класс [MessageQueue](https://developer.android.com/reference/android/os/MessageQueue.html). Это низкоуровневый `интерфейс`, который, в большинстве случаев, напрямую не используется в приложении.
 
-`MessageQueue` оперирует экземплярами класса [Message] (https://developer.android.com/reference/android/os/Message.html).
+`MessageQueue` оперирует экземплярами класса [Message](https://developer.android.com/reference/android/os/Message.html).
 
-К экземпляру класса `Message` можно добавить `payload`: данные любого типа или объект типа [Runnable] (https://developer.android.com/reference/java/lang/Runnable.html):
+К экземпляру класса `Message` можно добавить `payload`: данные любого типа или объект типа [Runnable](https://developer.android.com/reference/java/lang/Runnable.html):
 
 ```java
     ...
@@ -24,7 +24,7 @@ highlight: true
     ...
 ```
 
-Поскольку для экземпляров класса `Message` Android автоматически создаёт `pool` (реализованный прямо в классе `Message`), то для их инстанцирования рекомендуется использовать группу статических методов [Message.obtain(...)] (https://developer.android.com/reference/android/os/Message.html#obtain()) вместо явного создания:
+Поскольку для экземпляров класса `Message` Android автоматически создаёт `pool` (реализованный прямо в классе `Message`), то для их инстанцирования рекомендуется использовать группу статических методов [Message.obtain(...)](https://developer.android.com/reference/android/os/Message.html#obtain()) вместо явного создания:
 
 ```java
     ...
@@ -37,7 +37,7 @@ highlight: true
 
 ##  Looper
 
-Класс [Looper] (https://developer.android.com/reference/android/os/Looper.html) представляет собой бесконечный цикл выборки сообщений, выполняющийся в потоке ([Thread] (https://developer.android.com/reference/java/lang/Thread.html)), к которому он добавлен.
+Класс [Looper](https://developer.android.com/reference/android/os/Looper.html) представляет собой бесконечный цикл выборки сообщений, выполняющийся в потоке ([Thread](https://developer.android.com/reference/java/lang/Thread.html)), к которому он добавлен.
 
 По умолчанию, поток не имеет цикла выборки сообщений.
 
@@ -47,9 +47,9 @@ highlight: true
 
 Класс `Looper` имеет три основных метода:
 
-- статический метод [Looper.prepare()] (https://developer.android.com/reference/android/os/Looper.html#prepare()), который создаёт цикл выборки сообщений и, собственно, добавлет его к потоку, в котором этот метод вызывается
-- блокирующий метод [Looper.loop()] (https://developer.android.com/reference/android/os/Looper.html#loop()), который стартует цикл выборки сообщений (собственно в котором и осуществляется их диспетчеризация)
-- и, наконец, метод [Looper.quit()] (https://developer.android.com/reference/android/os/Looper.html#quit()), который завершает (прерывает) выполнение метода [Looper.loop()] (https://developer.android.com/reference/android/os/Looper.html#loop()).
+- статический метод [Looper.prepare()](https://developer.android.com/reference/android/os/Looper.html#prepare()), который создаёт цикл выборки сообщений и, собственно, добавлет его к потоку, в котором этот метод вызывается
+- блокирующий метод [Looper.loop()](https://developer.android.com/reference/android/os/Looper.html#loop()), который стартует цикл выборки сообщений (собственно в котором и осуществляется их диспетчеризация)
+- и, наконец, метод [Looper.quit()](https://developer.android.com/reference/android/os/Looper.html#quit()), который завершает (прерывает) выполнение метода [Looper.loop()](https://developer.android.com/reference/android/os/Looper.html#loop()).
 
 К потоку можно добавить не более одного цикла выборки сообщений (попытка добавить ещё один приведёт к возникновению исключительной ситуации).
 
@@ -59,7 +59,7 @@ highlight: true
 
 ## Handler
 
-Класс [Handler] (https://developer.android.com/reference/android/os/Handler.html) предназначен для отправки сообщений (`Message`) и объектов типа `Runnable` для обработки в потоке, к которому добавлен `Looper`:
+Класс [Handler](https://developer.android.com/reference/android/os/Handler.html) предназначен для отправки сообщений (`Message`) и объектов типа `Runnable` для обработки в потоке, к которому добавлен `Looper`:
 
 ```java
     ...
