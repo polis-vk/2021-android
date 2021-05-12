@@ -1,4 +1,7 @@
-class: center, middle
+---
+layout: default
+title: Reactive programming
+---
 
 # Reactive programming
 

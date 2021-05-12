@@ -1,4 +1,7 @@
-class: center, middle
+---
+layout: default
+title: Data and file storage in Android
+---
 
 # Data and file storage in Android
 

@@ -1,4 +1,7 @@
-class: center, middle
+---
+layout: default
+title: SOLID principles
+---
 
 # SOLID principles
 

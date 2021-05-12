@@ -1,4 +1,7 @@
-class: center, middle
+---
+layout: default
+title: Battery Consumption Details
+---
 
 # Battery Consumption Details
 

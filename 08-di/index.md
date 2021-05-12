@@ -1,4 +1,7 @@
-class: center, middle
+---
+layout: default
+title: Dependency Injection
+---
 
 # Dependency Injection
 

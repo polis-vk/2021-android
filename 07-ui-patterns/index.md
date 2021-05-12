@@ -1,4 +1,7 @@
-class: center, middle
+---
+layout: default
+title: Android UI Architecture Patterns
+---
 
 # Android UI Architecture Patterns
 
