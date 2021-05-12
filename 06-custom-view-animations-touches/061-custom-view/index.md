@@ -217,5 +217,5 @@ protected void onDraw(Canvas canvas)
 ## Что почитать
 
 - [https://developer.android.com/guide/topics/ui/how-android-draws.html](https://developer.android.com/guide/topics/ui/how-android-draws.html)
-- [https://developer.android.com/reference/android/view/View.html])(https://developer.android.com/reference/android/view/View.html)
+- [https://developer.android.com/reference/android/view/View.html](https://developer.android.com/reference/android/view/View.html)
 - [https://www.raywenderlich.com/142-android-custom-view-tutorial](https://www.raywenderlich.com/142-android-custom-view-tutorial)

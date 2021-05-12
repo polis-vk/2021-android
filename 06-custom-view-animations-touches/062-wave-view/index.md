@@ -243,4 +243,4 @@ override fun onDraw(canvas: Canvas) {
 
 ## Что почитать
 
-[Предыдущий урок](../061_custom_view/)
+[Предыдущий урок](../061-custom-view/)

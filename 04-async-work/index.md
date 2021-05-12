@@ -5,12 +5,12 @@ title: Курс Android разработки в Технополисе
 
 # Лекция №4 -- Асинхронная работа
 
-- [Процессы в Android](./041_android_processes/)
-- [Потоки в Android](./042_android_threads/)
-- [MessageQueue, Looper, Handler](./043_handler_queue_looper/)
-- [HandlerThread](./044_handler_thread/)
-- [AsyncTask, AsyncTaskLoader](./045_asynctask_asyncloader/)
-- [Service, IntentService, JobIntentService](./046_service/)
-- [RxJava](./047_rx/)
+- [Процессы в Android](./041-android-processes/)
+- [Потоки в Android](./042-android-threads/)
+- [MessageQueue, Looper, Handler](./043-handler-queue-looper/)
+- [HandlerThread](./044-handler-thread/)
+- [AsyncTask, AsyncTaskLoader](./045-asynctask-asyncloader/)
+- [Service, IntentService, JobIntentService](./046-service/)
+- [RxJava](./047-rx/)
 
 [Презентация](./presentation.pdf)

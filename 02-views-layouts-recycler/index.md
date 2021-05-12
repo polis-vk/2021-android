@@ -5,9 +5,9 @@ title: Курс Android разработки в Технополисе
 
 # Лекция №2 -- Основы верстки
 
-- [Базовые элементы и свойства](./021_base_elements/)
-- [ConstraintLayout](./022_constraint_layout/)
-- [RecyclerView](./023_recycler_view/)
-- [Обработка взаимодействия](./024_interaction/)
+- [Базовые элементы и свойства](./021-base-elements/)
+- [ConstraintLayout](./022-constraint-layout/)
+- [RecyclerView](./023-recycler-view/)
+- [Обработка взаимодействия](./024-interaction/)
 
 [Презентация](./presentation.pdf)

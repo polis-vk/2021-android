@@ -285,5 +285,5 @@ Android постоянно обновляется и вместе с тем до
 ## Что почитать
 
 - [https://developer.android.com/guide/topics/graphics/view-animation](https://developer.android.com/guide/topics/graphics/view-animation)
-- [https://habr.com/ru/company/yandex/blog/344296/] (https://habr.com/ru/company/yandex/blog/344296/)
+- [https://habr.com/ru/company/yandex/blog/344296/](https://habr.com/ru/company/yandex/blog/344296/)
 - [https://android.jlelse.eu/android-physics-based-animation-cf0cc125830f](https://android.jlelse.eu/android-physics-based-animation-cf0cc125830f)

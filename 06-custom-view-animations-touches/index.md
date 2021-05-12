@@ -5,9 +5,9 @@ title: Курс Android разработки в Технополисе
 
 # Лекция №6 -- Custom view, Animations, Touches
 
-- [Custom view](./061_custom_view/)
-- [Пример: Wave View](./062_wave_view)
-- [Анимации](./063_animations)
-- [Обработка тачей](./064_touches)
+- [Custom view](./061-custom-view/)
+- [Пример: Wave View](./062-wave-view)
+- [Анимации](./063-animations)
+- [Обработка тачей](./064-touches)
 
 [Презентация](./presentation.pdf)
